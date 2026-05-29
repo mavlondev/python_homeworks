@@ -42,20 +42,6 @@ n = 5
 for i in range(1, n):
     print(i**2)
 
-# **3.** `txt` nomli string saqlovchi o'zgaruvchi berilgan. `txt`dagi har uchinchi belgidan keyin pastgi chiziqcha (underscore) qo'yilsin. Agar belgi unli harf yoki orqasidan ostki chiziqcha qo'yilgan harf bo'lsa, ostki chiziqcha keyingi harfdan keyin qo'yilsin. Agar belgi satrdagi oxirgi belgi bo'lsa chiziqcha qo'yilmasin.
-
-
-# input: hello
-# output: hel_lo
-
-# input: assalom
-# output: ass_alom
-
-# input: abcabcdabcdeabcdefabcdefg
-# output: abc_abcd_abcdeab_cdef_abcdefg
-
-# incorrect task
-
 
 # **4. Number Guessing Game**
 
@@ -151,12 +137,6 @@ player_score = 0
 computer_score = 0
 
 while True:
-    if max(player_score, computer_score) == 5:
-        if player_score > computer_score:
-            print("Congratulations! You won the match!")
-        else:
-            print("Computer won the match! Better luck next time.")
-        break
     player_choice = input("Enter your choice (rock, paper, scissors): ")
     computer_choice = choice(options)
     print(f"Computer chose: {computer_choice}")
@@ -172,3 +152,9 @@ while True:
         print("It's a tie!")
     
     print(f"Scores => Player: {player_score}, Computer: {computer_score}")
+    if max(player_score, computer_score) == 5:
+        if player_score > computer_score:
+            print("Congratulations! You won the match!")
+        else:
+            print("Computer won the match! Better luck next time.")
+        break
