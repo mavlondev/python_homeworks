@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Mastery PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0908;--surface:#141210;--card:#1c1917;--border:#2e2a25;
+  --gold:#d4a843;--gold2:#f0c96a;--cream:#f5ede0;
+  --blue:#4a9eca;--green:#5bab78;--red:#e05a4a;--purple:#9b7fd4;
+  --text:#e8ddd0;--muted:#7a6f63;--faint:#3a342e;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--faint);border-radius:3px}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.crown{font-size:2.2rem;margin-bottom:.6rem;display:block;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;letter-spacing:-.01em;line-height:1.1}
+h1 em{color:var(--gold);font-style:normal}
+.tagline{color:var(--muted);font-size:.95rem;margin-top:.6rem;font-weight:300}
+.hstats{display:flex;justify-content:center;gap:2rem;margin-top:1.8rem;flex-wrap:wrap}
+.hstat .n{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gold);font-weight:700;display:block;line-height:1}
+.hstat .l{font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-top:.3rem}
+
+/* NAV */
+nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:200;gap:2px;padding:0 .5rem}
+nav::-webkit-scrollbar{display:none}
+.nb{padding:.85rem 1.1rem;border:none;background:none;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:500;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:.02em}
+.nb:hover{color:var(--text)}
+.nb.on{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* MAIN */
+main{max-width:1000px;margin:0 auto;padding:2rem 1.2rem 6rem}
+.sec{display:none}
+.sec.on{display:block}
+
+/* SECTION HEADER */
+.sh{margin-bottom:2rem}
+.sh-top{display:flex;align-items:center;gap:.9rem;margin-bottom:.4rem}
+.sh-icon{width:40px;height:40px;background:var(--faint);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.sh h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700}
+.sh p{color:var(--muted);font-size:.88rem;margin-left:49px}
+.divider{height:1px;background:linear-gradient(90deg,var(--border),transparent);margin-bottom:2rem}
+
+/* LESSON */
+.lesson{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:1rem;overflow:hidden;transition:border-color .2s}
+.lesson:hover{border-color:var(--faint)}
+.lh{display:flex;align-items:center;gap:.8rem;padding:1.1rem 1.3rem;cursor:pointer;user-select:none}
+.lnum{width:30px;height:30px;flex-shrink:0;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--gold)}
+.lh h4{flex:1;font-size:.95rem;font-weight:600;color:var(--text)}
+.ltag{font-size:.68rem;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;padding:.2rem .6rem;border-radius:3px;background:var(--faint);color:var(--muted);text-transform:uppercase}
+.larr{color:var(--muted);font-size:.75rem;transition:transform .25s;margin-left:.5rem}
+.lb{padding:1.4rem;display:none;border-top:1px solid var(--border)}
+.lesson.open .lb{display:block}
+.lesson.open .larr{transform:rotate(90deg)}
+.lesson.open{border-color:var(--gold);border-left:2px solid var(--gold)}
+
+/* GRAMMAR BOX */
+.gb{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.2rem;margin-bottom:1rem}
+.glabel{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.gb code{display:block;background:#0f0e0c;border:1px solid var(--faint);color:#c8b89a;padding:.7rem 1rem;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.82rem;margin:.5rem 0;line-height:1.7;white-space:pre-wrap}
+.ex{list-style:none}
+.ex li{padding:.4rem 0;border-bottom:1px solid var(--faint);font-size:.88rem}
+.ex li:last-child{border:none}
+.ex li b{color:var(--blue)}
+.uz{color:var(--muted);font-size:.8rem;font-style:italic}
+.tip{background:rgba(212,168,67,.07);border:1px solid rgba(212,168,67,.2);border-radius:6px;padding:.7rem 1rem;font-size:.83rem;color:#c8b060;margin-top:.8rem}
+.tip::before{content:'💡 ';font-style:normal}
+
+/* VOCAB */
+.vtable{width:100%;border-collapse:collapse;font-size:.85rem}
+.vtable th{background:var(--faint);color:var(--gold);padding:.65rem 1rem;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
+.vtable td{padding:.55rem 1rem;border-bottom:1px solid var(--faint)}
+.vtable tr:hover td{background:var(--faint)}
+.vtable td:first-child{color:var(--blue);font-weight:600}
+.vtable td:nth-child(2){color:var(--muted);font-size:.78rem;font-style:italic;font-family:'JetBrains Mono',monospace}
+.vcat{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin:1.8rem 0 .7rem;color:var(--cream);display:flex;align-items:center;gap:.6rem}
+.vcat::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* FLASHCARD */
+.fc-wrap{perspective:1000px;margin-bottom:1.5rem}
+.fc{width:100%;min-height:160px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:12px}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;border:1px solid var(--border)}
+.fc-front{background:var(--card)}
+.fc-back{background:var(--faint);transform:rotateY(180deg)}
+.fc-word{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold);text-align:center}
+.fc-pron{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--muted);margin-top:.3rem}
+.fc-hint{font-size:.75rem;color:var(--muted);margin-top:1rem}
+.fc-meaning{font-size:1.2rem;color:var(--cream);text-align:center;font-weight:600}
+.fc-example{font-size:.82rem;color:var(--muted);margin-top:.6rem;text-align:center;font-style:italic}
+.fc-nav{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:.8rem}
+.fc-btn{padding:.5rem 1.2rem;background:var(--faint);border:1px solid var(--border);color:var(--text);border-radius:6px;font-family:'Outfit',sans-serif;font-size:.82rem;cursor:pointer;transition:all .15s}
+.fc-btn:hover{background:var(--border);border-color:var(--gold)}
+.fc-counter{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted)}
+
+/* QUIZ */
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.2rem}
+.qnum{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.6rem}
+.qtext{font-size:1rem;font-weight:500;margin-bottom:1rem;line-height:1.5}
+.qopt{display:block;width:100%;text-align:left;margin:.35rem 0;padding:.7rem 1rem;background:var(--bg);border:1px solid var(--border);border-radius:7px;font-family:'Outfit',sans-serif;font-size:.88rem;color:var(--text);cursor:pointer;transition:all .15s}
+.qopt:hover:not([disabled]){border-color:var(--gold);background:var(--faint)}
+.qopt.ok{background:rgba(91,171,120,.12);border-color:var(--green);color:var(--green);font-weight:600}
+.qopt.no{background:rgba(224,90,74,.1);border-color:var(--red);color:var(--red)}
+.qopt[disabled]{cursor:default}
+.qfeedback{margin-top:.7rem;font-size:.82rem;padding:.5rem .8rem;border-radius:5px;display:none}
+.qfeedback.ok{background:rgba(91,171,120,.1);color:var(--green);border:1px solid rgba(91,171,120,.2)}
+.qfeedback.no{background:rgba(224,90,74,.08);color:var(--red);border:1px solid rgba(224,90,74,.2)}
+.score-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;margin-top:1.2rem}
+.score-num{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);font-weight:700}
+.score-lbl{color:var(--muted);font-size:.85rem;margin-top:.3rem}
+.submit-btn{margin-top:1.2rem;padding:.75rem 2rem;background:var(--gold);color:var(--bg);border:none;border-radius:7px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s;letter-spacing:.03em}
+.submit-btn:hover{background:var(--gold2)}
+
+/* TASK */
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.2rem}
+.thead2{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;flex-wrap:wrap}
+.tbadge{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;padding:.25rem .75rem;border-radius:4px;text-transform:uppercase;font-weight:500}
+.tbG{background:rgba(91,171,120,.15);color:var(--green);border:1px solid rgba(91,171,120,.3)}
+.tbW{background:rgba(74,158,202,.12);color:var(--blue);border:1px solid rgba(74,158,202,.25)}
+.tbS{background:rgba(224,90,74,.1);color:var(--red);border:1px solid rgba(224,90,74,.2)}
+.tbV{background:rgba(212,168,67,.1);color:var(--gold);border:1px solid rgba(212,168,67,.2)}
+.tbP{background:rgba(155,127,212,.1);color:var(--purple);border:1px solid rgba(155,127,212,.2)}
+.tpts{margin-left:auto;font-size:.75rem;color:var(--muted);border:1px solid var(--border);padding:.2rem .6rem;border-radius:4px;font-family:'JetBrains Mono',monospace}
+.tcard h4{font-size:1rem;font-weight:600;margin-bottom:.4rem}
+.tcard p{font-size:.87rem;color:var(--muted);margin-bottom:.8rem}
+.tlist{list-style:none;counter-reset:t}
+.tlist li{counter-increment:t;padding:.45rem .5rem .45rem 2rem;position:relative;border-bottom:1px solid var(--faint);font-size:.87rem}
+.tlist li:last-child{border:none}
+.tlist li::before{content:counter(t)".";position:absolute;left:0;top:.5rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gold)}
+.afield{width:100%;margin-top:.7rem;padding:.65rem .9rem;border:1px solid var(--border);border-radius:7px;font-size:.87rem;font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);resize:vertical;transition:border .2s}
+.afield:focus{outline:none;border-color:var(--gold)}
+.afield::placeholder{color:var(--muted)}
+.ans-btn{margin-top:.7rem;padding:.55rem 1.4rem;background:var(--faint);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.ans-btn:hover{border-color:var(--gold);color:var(--gold)}
+.rmsg{margin-top:.6rem;font-size:.83rem;padding:.5rem .9rem;border-radius:5px;display:none;border:1px solid}
+.rmsg.ok{background:rgba(91,171,120,.1);color:var(--green);border-color:rgba(91,171,120,.25)}
+.rmsg.er{background:rgba(224,90,74,.08);color:var(--red);border-color:rgba(224,90,74,.2)}
+
+/* PROGRESS */
+.prog-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1.5rem;margin-bottom:.8rem}
+.prog-label{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.5rem}
+.prog-track{background:var(--faint);border-radius:4px;height:7px;overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),#e8993a);transition:width .7s ease}
+
+/* CERT */
+.cert{border:1px solid var(--border);background:var(--card);border-radius:16px;padding:2.5rem;text-align:center;position:relative;overflow:hidden}
+.cert::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(212,168,67,.06),transparent 70%);pointer-events:none}
+.cert h3{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold)}
+.cert-input{padding:.65rem 1.2rem;font-size:.95rem;border:1px solid var(--border);border-radius:7px;font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);width:280px;text-align:center;margin-top:1rem}
+.cert-input:focus{outline:none;border-color:var(--gold)}
+.cert-btn{display:block;margin:.8rem auto 0;padding:.7rem 2rem;background:var(--gold);color:var(--bg);border:none;border-radius:7px;font-size:.9rem;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:background .2s}
+.cert-btn:hover{background:var(--gold2)}
+#cert-out{margin-top:1.5rem;display:none;border-top:1px solid var(--border);padding-top:1.5rem}
+#cert-out .cname{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);font-weight:700}
+
+/* OVERVIEW CARDS */
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem;border-top:3px solid var(--gold);transition:transform .2s,border-color .2s}
+.ov-card:hover{transform:translateY(-2px)}
+.ov-card.b{border-top-color:var(--blue)}
+.ov-card.g{border-top-color:var(--green)}
+.ov-card.r{border-top-color:var(--red)}
+.ov-card.p{border-top-color:var(--purple)}
+.ov-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem}
+.ov-lvl{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .6rem;border-radius:3px;background:var(--faint);color:var(--gold);text-transform:uppercase;letter-spacing:.08em}
+.ov-dur{font-size:.75rem;color:var(--muted)}
+.ov-card h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;margin-bottom:.4rem}
+.ov-card p{font-size:.82rem;color:var(--muted);margin-bottom:.7rem}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.chip{font-size:.72rem;background:var(--faint);border:1px solid var(--border);padding:.18rem .6rem;border-radius:20px;color:var(--muted)}
+
+/* WORD MATCH */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem}
+.mitem{padding:.55rem .9rem;background:var(--bg);border:1.5px solid var(--border);border-radius:7px;font-size:.85rem;cursor:pointer;transition:all .15s;user-select:none}
+.mitem:hover{border-color:var(--gold)}
+.mitem.sel{border-color:var(--gold);background:var(--faint);color:var(--gold)}
+.mitem.matched{border-color:var(--green);background:rgba(91,171,120,.1);color:var(--green);cursor:default}
+.mitem.wrong{border-color:var(--red);background:rgba(224,90,74,.08)}
+
+/* LISTENING */
+.audio-card{background:var(--faint);border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.8rem}
+.audio-text{font-size:1rem;font-weight:500;line-height:1.6;font-style:italic;color:var(--cream)}
+.audio-hint{font-size:.78rem;color:var(--muted);margin-top:.4rem}
+
+/* FILL BLANK */
+.fill-sent{font-size:.92rem;margin-bottom:.8rem;line-height:1.8}
+.blank{display:inline-block;width:100px;border-bottom:2px solid var(--gold);background:transparent;font-family:'Outfit',sans-serif;font-size:.9rem;color:var(--gold);text-align:center;padding:0 .3rem;outline:none;caret-color:var(--gold)}
+.blank:focus{border-bottom-color:var(--gold2)}
+
+@media(max-width:600px){main{padding:1.2rem .9rem 5rem}.hstats{gap:1.2rem}.ov-grid{grid-template-columns:1fr}.match-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="crown">👑</span>
+  <h1>English <em>Mastery</em> PRO</h1>
+  <p class="tagline">O'zbeklar uchun eng to'liq ingliz tili kursi · A1 → C1</p>
+  <div class="hstats">
+    <div class="hstat"><span class="n">8</span><span class="l">Daraja</span></div>
+    <div class="hstat"><span class="n">60+</span><span class="l">Mavzu</span></div>
+    <div class="hstat"><span class="n">200+</span><span class="l">Vazifa</span></div>
+    <div class="hstat"><span class="n">1000+</span><span class="l">So'z</span></div>
+    <div class="hstat"><span class="n">50+</span><span class="l">Test</span></div>
+  </div>
+</header>
+
+<nav id="mainnav">
+  <button class="nb on" onclick="show('overview',this)">🗺 Dastur</button>
+  <button class="nb" onclick="show('a1',this)">🌱 A1</button>
+  <button class="nb" onclick="show('a2',this)">🌿 A2</button>
+  <button class="nb" onclick="show('b1',this)">📘 B1</button>
+  <button class="nb" onclick="show('b2',this)">📗 B2</button>
+  <button class="nb" onclick="show('c1',this)">🏆 C1</button>
+  <button class="nb" onclick="show('vocab',this)">📖 Lug'at</button>
+  <button class="nb" onclick="show('flashcard',this)">🃏 Kartochka</button>
+  <button class="nb" onclick="show('tasks',this)">✏️ Vazifalar</button>
+  <button class="nb" onclick="show('quiz',this)">🧠 Test</button>
+  <button class="nb" onclick="show('progress',this)">📊 Natija</button>
+  <button class="nb" onclick="show('cert',this)">🏅 Sertifikat</button>
+</nav>
+
+<main>
+
+<!-- ══════════════ OVERVIEW ══════════════ -->
+<div id="overview" class="sec on">
+  <div class="sh">
+    <div class="sh-top"><div class="sh-icon">🗺</div><h2>To'liq O'quv Dasturi</h2></div>
+    <p>A1 dan C1 gacha — barcha darajalar, mavzular va maqsadlar</p>
+  </div>
+  <div class="divider"></div>
+  <div class="ov-grid">
+    <div class="ov-card">
+      <div class="ov-top"><span class="ov-lvl">A1</span><span class="ov-dur">4–6 hafta</span></div>
+      <h3>Boshlang'ich</h3>
+      <p>Alifbo, salomlashish, oddiy gaplar, raqamlar, ranglar</p>
+      <div class="chips"><span class="chip">Alfabet</span><span class="chip">To be</span><span class="chip">Pronoun</span><span class="chip">Numbers</span><span class="chip">Colors</span><span class="chip">Days</span></div>
+    </div>
+    <div class="ov-card b">
+      <div class="ov-top"><span class="ov-lvl" style="color:var(--blue)">A2</span><span class="ov-dur">6–8 hafta</span></div>
+      <h3>Elementar</h3>
+      <p>Present/Past Simple, artikl, prepositions, kundalik so'zlashuv</p>
+      <div class="chips"><span class="chip">Pres. Simple</span><span class="chip">Past Simple</span><span class="chip">Articles</span><span class="chip">Prepositions</span></div>
+    </div>
+    <div class="ov-card g">
+      <div class="ov-top"><span class="ov-lvl" style="color:var(--green)">B1</span><span class="ov-dur">8–10 hafta</span></div>
+      <h3>O'rta</h3>
+      <p>Present Perfect, modal fe'llar, passive, conditional 0–1</p>
+      <div class="chips"><span class="chip">Pres. Perfect</span><span class="chip">Modals</span><span class="chip">Passive</span><span class="chip">Cond. 1</span></div>
+    </div>
+    <div class="ov-card r">
+      <div class="ov-top"><span class="ov-lvl" style="color:var(--red)">B2</span><span class="ov-dur">10–12 hafta</span></div>
+      <h3>Yuqori O'rta</h3>
+      <p>Conditionals 2–3, reported speech, inversion, phrasal verbs</p>
+      <div class="chips"><span class="chip">Cond. 2–3</span><span class="chip">Rep. Speech</span><span class="chip">Inversion</span><span class="chip">Phrasal V.</span></div>
+    </div>
+    <div class="ov-card p">
+      <div class="ov-top"><span class="ov-lvl" style="color:var(--purple)">C1</span><span class="ov-dur">12–16 hafta</span></div>
+      <h3>Ilg'or</h3>
+      <p>Academic writing, idioms, nuanced grammar, discourse markers</p>
+      <div class="chips"><span class="chip">Subjunctive</span><span class="chip">Idioms</span><span class="chip">Cleft sent.</span><span class="chip">Collocations</span></div>
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem;margin-bottom:1rem">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:.9rem;color:var(--cream)">📌 Kun tartibiga misol</h3>
+    <div style="display:grid;gap:.5rem;font-size:.87rem">
+      <div style="display:flex;gap:.8rem;align-items:center;padding:.5rem .7rem;background:var(--bg);border-radius:6px"><span style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.78rem">08:00</span><span>10 ta yangi so'z o'rganing (flashcard)</span></div>
+      <div style="display:flex;gap:.8rem;align-items:center;padding:.5rem .7rem;background:var(--bg);border-radius:6px"><span style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.78rem">12:00</span><span>1 ta grammatika mavzusini o'qing + misollar</span></div>
+      <div style="display:flex;gap:.8rem;align-items:center;padding:.5rem .7rem;background:var(--bg);border-radius:6px"><span style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.78rem">18:00</span><span>Vazifa va testlarni bajaring</span></div>
+      <div style="display:flex;gap:.8rem;align-items:center;padding:.5rem .7rem;background:var(--bg);border-radius:6px"><span style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.78rem">21:00</span><span>Ingliz tilida film/podcast tinglang (15 daqiqa)</span></div>
+    </div>
+  </div>
+  <div class="tip" style="font-style:normal">Har kuni 30 daqiqa × 6 oy = B2 darajasi. Izchillik — eng kuchli qurol!</div>
+</div>
+
+<!-- ══════════════ A1 ══════════════ -->
+<div id="a1" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">🌱</div><h2>A1 — Boshlang'ich</h2></div><p>Ingliz tilining eng asosiy qoidalari va so'zlari</p></div>
+  <div class="divider"></div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">01</div><h4>Alifbo, Talaffuz & Fonetika</h4><span class="ltag">Asos</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">26 ta harf — vowels & consonants</div>
+        <code>🔵 Unlilar (Vowels — 5): A  E  I  O  U
+⬜ Undoshlar (Consonants — 21): B C D F G H J K L M N P Q R S T V W X Y Z</code>
+      </div>
+      <div class="gb"><div class="glabel">Talaffuz qoidalari</div>
+        <code>C → [k] yoki [s]:  cat /kæt/  |  city /sɪti/
+G → [g] yoki [dʒ]: go /gəʊ/  |  gym /dʒɪm/
+TH → [θ] yoki [ð]: think /θɪŋk/  |  the /ðə/
+SH → [ʃ]:  she /ʃiː/  |  shop /ʃɒp/
+CH → [tʃ]: chair /tʃeər/  |  church /tʃɜːtʃ/</code>
+      </div>
+      <div class="gb"><div class="glabel">Salomlashish iboralari</div>
+        <ul class="ex">
+          <li><b>Hello / Hi</b> — <span class="uz">Salom</span></li>
+          <li><b>Good morning</b> — <span class="uz">Xayrli tong</span></li>
+          <li><b>Good afternoon</b> — <span class="uz">Xayrli kun</span></li>
+          <li><b>Good evening</b> — <span class="uz">Xayrli kech</span></li>
+          <li><b>Good night</b> — <span class="uz">Yaxshi tunlar</span></li>
+          <li><b>Goodbye / See you later</b> — <span class="uz">Xayr / Ko'rishguncha</span></li>
+          <li><b>How are you? — Fine, thanks!</b> — <span class="uz">Qalay?— Yaxshi, rahmat!</span></li>
+          <li><b>Nice to meet you.</b> — <span class="uz">Tanishganimdan xursandman.</span></li>
+          <li><b>What's your name? — My name is …</b> — <span class="uz">Ismingiz nima? — Mening ismim …</span></li>
+        </ul>
+      </div>
+      <div class="tip">Har kuni oynaga qarab o'zingizni inglizcha tanishtiring!</div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">02</div><h4>To be fe'li — am / is / are</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Jadval</div>
+        <code>Tasdiq         Qisqa    Inkor              So'roq
+I am           I'm      I am not (aren't)  Am I?
+You are        You're   You are not        Are you?
+He/She/It is   He's     He is not (isn't)  Is he?
+We are         We're    We are not         Are we?
+They are       They're  They are not       Are they?</code>
+      </div>
+      <ul class="ex">
+        <li><b>I'm a student.</b> — <span class="uz">Men talabaman.</span></li>
+        <li><b>She's a doctor.</b> — <span class="uz">U (ayol) shifokor.</span></li>
+        <li><b>They're from Tashkent.</b> — <span class="uz">Ular Toshkentdan.</span></li>
+        <li><b>Are you tired?</b> — <span class="uz">Siz charchadingizmi?</span></li>
+        <li><b>It isn't cold today.</b> — <span class="uz">Bugun sovuq emas.</span></li>
+        <li><b>Where are you from?</b> — <span class="uz">Siz qayerdansiz?</span></li>
+      </ul>
+      <div class="tip">To be = "bo'lmoq/ekan" ma'nosida ham, vasf bildirish uchun ham ishlatiladi.</div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">03</div><h4>Raqamlar, Vaqt & Sana</h4><span class="ltag">Leksika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">1–20</div>
+        <code>1-one  2-two  3-three  4-four  5-five  6-six  7-seven
+8-eight  9-nine  10-ten  11-eleven  12-twelve
+13-thirteen  14-fourteen  15-fifteen  16-sixteen
+17-seventeen  18-eighteen  19-nineteen  20-twenty</code>
+      </div>
+      <div class="gb"><div class="glabel">O'nliklar & yuzlar</div>
+        <code>30-thirty  40-forty  50-fifty  60-sixty  70-seventy
+80-eighty  90-ninety  100-one hundred  1000-one thousand
+237 = two hundred and thirty-seven</code>
+      </div>
+      <div class="gb"><div class="glabel">Vaqt so'rash</div>
+        <code>What time is it?  →  It's …
+3:00  → three o'clock
+3:15  → quarter past three
+3:30  → half past three
+3:45  → quarter to four
+3:05  → five past three</code>
+      </div>
+      <div class="gb"><div class="glabel">Haftaning kunlari</div>
+        <code>Monday / Tuesday / Wednesday / Thursday / Friday
+Saturday / Sunday
+Oylar: January February March April May June
+July August September October November December</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">04</div><h4>Olmoshlar & Egalik shakllari</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">To'liq jadval</div>
+        <code>Subj. | Obj.  | Poss.adj | Poss.pron | Reflexive
+I     | me    | my       | mine      | myself
+You   | you   | your     | yours     | yourself
+He    | him   | his      | his       | himself
+She   | her   | her      | hers      | herself
+It    | it    | its      | —         | itself
+We    | us    | our      | ours      | ourselves
+They  | them  | their    | theirs    | themselves</code>
+      </div>
+      <ul class="ex">
+        <li><b>This is my book. — It's mine.</b> — <span class="uz">Bu mening kitobim. — Bu meniki.</span></li>
+        <li><b>I did it myself.</b> — <span class="uz">Men buni o'zim qildim.</span></li>
+        <li><b>Give her the keys.</b> — <span class="uz">Unga (ayolga) kalitlarni bering.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">05</div><h4>This / That / These / Those — Ko'rsatish olmoshlari</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Farqi</div>
+        <code>this   → bu (yaqin, birlik)      — This is a pen.
+that   → u/o'sha (uzoq, birlik)   — That is a car.
+these  → bular (yaqin, ko'plik)   — These are books.
+those  → ular/o'shalar (uzoq, k.) — Those are trees.</code>
+      </div>
+      <ul class="ex">
+        <li><b>Is this your bag?</b> — <span class="uz">Bu sizning sumkangizmi?</span></li>
+        <li><b>Those children are happy.</b> — <span class="uz">O'sha bolalar baxtli.</span></li>
+        <li><b>These apples are delicious.</b> — <span class="uz">Bu olmalar mazali.</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ A2 ══════════════ -->
+<div id="a2" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">🌿</div><h2>A2 — Elementar</h2></div><p>Kundalik muloqot uchun zarur grammatika</p></div>
+  <div class="divider"></div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">01</div><h4>Present Simple — Qoidalar va amaliyot</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Tuzilish</div>
+        <code>✅  I/You/We/They + V1        He/She/It + V+s/es
+❌  I/You/We/They + don't + V1  He/She/It + doesn't + V1
+❓  Do + I/you/we/they + V1?   Does + he/she/it + V1?
+He/she/it qo'shimchalari:
+  → odatda: +s (works, reads, eats)
+  → -ch,-sh,-s,-x,-o: +es (watches, washes, goes)
+  → konsonant+y → ies: study→studies, fly→flies</code>
+      </div>
+      <div class="gb"><div class="glabel">Kalit vaqt so'zlari (adverbs of frequency)</div>
+        <code>always (doimo) → usually (odatda) → often (tez-tez)
+→ sometimes (ba'zan) → rarely (kamdan-kam)
+→ never (hech qachon)
+I always have breakfast.  She never smokes.
+How often do you exercise?</code>
+      </div>
+      <ul class="ex">
+        <li><b>I drink coffee every morning.</b> — <span class="uz">Men har kuni ertalab qahva ichaman.</span></li>
+        <li><b>She doesn't watch TV much.</b> — <span class="uz">U televisor ko'rmaydi deyarli.</span></li>
+        <li><b>Does he play football?</b> — <span class="uz">U futbol o'ynaydimi?</span></li>
+        <li><b>The shop opens at 9.</b> — <span class="uz">Do'kon 9 da ochiladi.</span></li>
+        <li><b>Water boils at 100°C.</b> — <span class="uz">Suv 100°C da qaynaydi.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">02</div><h4>Past Simple — O'tgan zamon</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Muntazam fe'llar (Regular)</div>
+        <code>V1 + ed  (yoki d, ied, pped…)
+work→worked  play→played  live→lived
+study→studied  stop→stopped  travel→travelled
+Qoidalar: -e bilan tugasa +d, konsonant+y→ied, qisqa+konsonant→ikkilantir</code>
+      </div>
+      <div class="gb"><div class="glabel">Nomuntazam fe'llar (Irregular) — 40 ta asosiy</div>
+        <code>be→was/were  |  go→went   |  come→came  |  see→saw
+eat→ate      |  have→had  |  do→did    |  get→got
+give→gave    |  make→made |  take→took |  know→knew
+say→said     |  find→found|  think→thought
+buy→bought   |  bring→brought |  feel→felt
+leave→left   |  lose→lost |  meet→met  |  put→put
+read→read    |  run→ran   |  sit→sat   |  stand→stood
+tell→told    |  write→wrote|  drive→drove|  grow→grew</code>
+      </div>
+      <ul class="ex">
+        <li><b>I visited Paris last summer.</b> — <span class="uz">O'tgan yoz Parijga bordim.</span></li>
+        <li><b>She didn't come to school.</b> — <span class="uz">U maktabga kelmadi.</span></li>
+        <li><b>Did you enjoy the film?</b> — <span class="uz">Filmdan zavqlandingizmi?</span></li>
+        <li><b>We met them at the airport.</b> — <span class="uz">Biz ularni aeroportda kutib oldik.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">03</div><h4>Artikl — a / an / the / —</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Qachon qaysi artikl?</div>
+        <code>a/an → noaniq, birinchi marta aytilgan, bir dona
+the  → aniq, avval aytilgan, yagona (sun, moon, President)
+—    → ko'plik umumiy, nomuvofiq nom (music, love, Tashkent)
+
+a + undosh tovush: a book, a car, a university (/juː/)
+an + unli tovush:  an apple, an hour (/aʊər/), an MBA</code>
+      </div>
+      <ul class="ex">
+        <li><b>I saw a dog. The dog was big.</b> — <span class="uz">Bir it ko'rdim. O'sha it katta edi.</span></li>
+        <li><b>The sun rises in the east.</b> — <span class="uz">Quyosh sharqdan chiqadi.</span></li>
+        <li><b>She plays the piano.</b> / <b>She plays football.</b></li>
+        <li><b>I love music.</b> (— music = umumiy) </li>
+        <li><b>He's an honest man.</b> — <span class="uz">U halol odam. (an + unli)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">04</div><h4>Prepositions — Old ko'makchilar</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Vaqt uchun (Time)</div>
+        <code>at  → aniq vaqt:  at 8 o'clock, at noon, at night
+on  → kun:        on Monday, on 5th May, on my birthday
+in  → uzoqroq:   in May, in 2024, in the morning/afternoon/evening
+     mamlakat/shahar uchun ham: in Tashkent, in Uzbekistan</code>
+      </div>
+      <div class="gb"><div class="glabel">Joy uchun (Place)</div>
+        <code>at  → aniq joy:   at school, at home, at the station
+in  → ichida:     in the room, in London, in the box
+on  → ustida:     on the table, on the wall, on the floor
+under → ostida   |  next to → yonida  |  between → orasida
+behind → orqasida|  in front of → oldida  |  near → yaqinida</code>
+      </div>
+      <ul class="ex">
+        <li><b>The keys are on the table.</b> — <span class="uz">Kalitlar stolning ustida.</span></li>
+        <li><b>I'll meet you at the café at 3.</b></li>
+        <li><b>She was born in 1998 in Samarkand.</b></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ B1 ══════════════ -->
+<div id="b1" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">📘</div><h2>B1 — O'rta daraja</h2></div><p>Murakkab zamon shakllari va modal fe'llar</p></div>
+  <div class="divider"></div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">01</div><h4>Present Perfect vs Past Simple</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Present Perfect: have/has + V3</div>
+        <code>Kalit so'zlar: ever, never, already, yet, just, since, for,
+              recently, so far, lately, in my life
+I have just arrived. (hozir gina)
+Have you ever been to Japan? (hayot tajribasi)
+She hasn't finished yet. (hali tugamagan)
+We've lived here for 5 years / since 2019.</code>
+      </div>
+      <div class="gb"><div class="glabel">Farqi</div>
+        <code>Past Simple → aniq vaqt belgilangan (yesterday, last year, in 2020)
+Pres. Perfect → vaqt noaniq YOKI natija muhim
+
+❌ I have seen him yesterday.
+✅ I saw him yesterday.
+✅ I have seen that film. (qachonligini bilmaymiz, natija muhim)</code>
+      </div>
+      <ul class="ex">
+        <li><b>I've lost my keys!</b> — <span class="uz">Kalitlarimni yo'qotib qo'ydim! (hozirgacha yo'q)</span></li>
+        <li><b>I lost my keys yesterday.</b> — <span class="uz">Kecha kalitlarimni yo'qotdim.</span></li>
+        <li><b>Have you ever eaten durian?</b></li>
+        <li><b>She's been a teacher for 10 years.</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">02</div><h4>Past Continuous & Past Perfect</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Past Continuous: was/were + V-ing</div>
+        <code>→ O'tmishda muayyan vaqtda davom etgan harakat
+I was sleeping at 10 pm.
+They were watching TV when I called.
+While she was cooking, I was reading.</code>
+      </div>
+      <div class="gb"><div class="glabel">Past Perfect: had + V3</div>
+        <code>→ O'tmishda boshqa harakatdan oldin sodir bo'lgan
+When I arrived, the film had already started.
+She had never seen snow before she came to Russia.
+By the time he called, I had left.</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">03</div><h4>Modal Fe'llar — To'liq qo'llanma</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Hozir / Kelajak uchun</div>
+        <code>can     → qodir (I can swim.)
+could   → qodir edi / muloyim iltimos (Could you help?)
+may     → ehtimol yoki ruxsat (It may rain. May I leave?)
+might   → kuchsiz ehtimol (I might come.)
+must    → majburiy (You must wear a seatbelt.)
+mustn't → taqiq (You mustn't smoke here.)
+should  → tavsiya (You should see a doctor.)
+ought to→ should ga yaqin (You ought to apologise.)
+will    → kelajak / taklif (I'll help you.)
+would   → shartli / so'rov (Would you like tea?)</code>
+      </div>
+      <div class="gb"><div class="glabel">Ehtimol darajasi</div>
+        <code>100% → will/must be  ("He must be tired.")
+80%  → should be
+50%  → may be
+30%  → might be / could be
+0%   → can't be ("She can't be serious!")</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">04</div><h4>Passive Voice — Barcha zamonlar</div><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">be + V3</div>
+        <code>Pres. Simple:   am/is/are + V3    → English is spoken worldwide.
+Past Simple:    was/were + V3    → The letter was sent.
+Pres. Perf.:    have/has been+V3 → It has been solved.
+Past Perfect:   had been + V3    → The work had been done.
+Future:         will be + V3     → It will be announced.
+Modal:          modal+be+V3      → It should be checked.</code>
+      </div>
+      <ul class="ex">
+        <li><b>Active:</b> They make iPhones in China. → <b>Passive:</b> iPhones are made in China.</li>
+        <li><b>Active:</b> Someone stole my wallet. → <b>Passive:</b> My wallet was stolen.</li>
+        <li><b>The bridge is being built.</b> — <span class="uz">Ko'prik qurilmoqda.</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ B2 ══════════════ -->
+<div id="b2" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">📗</div><h2>B2 — Yuqori O'rta</h2></div><p>Murakkab grammatika va nutq mahorati</p></div>
+  <div class="divider"></div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">01</div><h4>Conditionals — 4 tur shartli gap</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">To'liq jadval</div>
+        <code>0 — Umumiy haqiqat:
+  If + Pres.Simple, Pres.Simple
+  "If you freeze water, it becomes ice."
+
+1 — Haqiqiy shart (kelajak):
+  If + Pres.Simple, will/can/may + V
+  "If it rains, I'll stay home."
+
+2 — Xayoliy hozir (afsos yoki tush):
+  If + Past Simple, would/could/might + V
+  "If I had wings, I would fly to you."
+  "If I were you, I wouldn't do that." (were — subjunctive)
+
+3 — O'tmishda bo'lmagan (afsus):
+  If + Past Perfect, would/could have + V3
+  "If I had studied, I would have passed."
+
+Mixed: If + Past Perfect, would + V  (o'tmish → hozir)
+  "If she had left earlier, she would be here now."</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">02</div><h4>Reported Speech — Bilvosita nutq</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Zamon siljishi (backshift)</div>
+        <code>"I am tired."          → He said he was tired.
+"I work here."         → She said she worked there.
+"I am working."        → He said he was working.
+"I will help."         → She said she would help.
+"I can swim."          → He said he could swim.
+"I have finished."     → She said she had finished.
+"I ate lunch."         → He said he had eaten lunch.</code>
+      </div>
+      <div class="gb"><div class="glabel">So'roq gaplar</div>
+        <code>"Are you coming?" → He asked if/whether I was coming.
+"Where do you live?" → She asked where I lived.
+"What did you do?" → He asked what I had done.</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">03</div><h4>Phrasal Verbs — 60 ta asosiy</h4><span class="ltag">Leksika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <table class="vtable">
+        <thead><tr><th>Phrasal Verb</th><th>Ma'no</th><th>Misol</th></tr></thead>
+        <tbody>
+          <tr><td>give up</td><td>voz kechmoq</td><td>Never give up!</td></tr>
+          <tr><td>look up</td><td>qidirmoq (lug'atda)</td><td>Look it up online.</td></tr>
+          <tr><td>come across</td><td>tasodifan uchramoq</td><td>I came across an old photo.</td></tr>
+          <tr><td>find out</td><td>bilib olmoq</td><td>I finally found out the truth.</td></tr>
+          <tr><td>put off</td><td>kechiktirmoq</td><td>Stop putting things off!</td></tr>
+          <tr><td>turn down</td><td>rad etmoq</td><td>She turned down the offer.</td></tr>
+          <tr><td>take off</td><td>uchmoq / yechmoq</td><td>The plane took off. / Take off your shoes.</td></tr>
+          <tr><td>carry on</td><td>davom etmoq</td><td>Carry on — don't stop.</td></tr>
+          <tr><td>get along</td><td>yaxshi munosabatda bo'lmoq</td><td>We get along well.</td></tr>
+          <tr><td>run out of</td><td>tugamoq</td><td>We've run out of milk.</td></tr>
+          <tr><td>break down</td><td>ishdan chiqmoq</td><td>My car broke down.</td></tr>
+          <tr><td>set up</td><td>tashkil etmoq</td><td>She set up a new company.</td></tr>
+          <tr><td>look forward to</td><td>sog'inch bilan kutmoq</td><td>I look forward to seeing you.</td></tr>
+          <tr><td>go through</td><td>o'tish / boshdan kechirmoq</td><td>She went through hard times.</td></tr>
+          <tr><td>bring up</td><td>tarbiyalamoq / ko'tarmoq</td><td>She was brought up in Bukhara.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ C1 ══════════════ -->
+<div id="c1" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">🏆</div><h2>C1 — Ilg'or daraja</h2></div><p>Academic ingliz tili va nozik grammatika</p></div>
+  <div class="divider"></div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">01</div><h4>Inversion — Inversiya</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Salbiy so'z boshda tursa</div>
+        <code>Never have I seen such beauty.  (I have never seen…)
+Rarely does he make mistakes.  (He rarely makes…)
+Not only did she win, but she also broke a record.
+Hardly had I arrived when it started raining.
+No sooner had he left than she called.
+Only then did I understand the truth.
+Under no circumstances should you do this.</code>
+      </div>
+      <div class="tip">Inversiya — rasmiy yozma uslub va adabiy nutqda keng qo'llaniladi.</div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">02</div><h4>Cleft Sentences — Ajratib ta'kidlash</h4><span class="ltag">Grammatika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">It is/was … that/who</div>
+        <code>Normal:  She broke the vase.
+Cleft:   It was SHE who broke the vase.
+         It was THE VASE that she broke.
+         It was IN THE KITCHEN that she broke it.
+
+What-cleft:
+  What I need is some rest.
+  What surprised me was his reaction.</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">03</div><h4>Idioms — 50 ta eng mashhur</h4><span class="ltag">Leksika</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <table class="vtable">
+        <thead><tr><th>Idiom</th><th>Ma'no</th></tr></thead>
+        <tbody>
+          <tr><td>Break a leg!</td><td>Omad! (teatrda)</td></tr>
+          <tr><td>Hit the nail on the head</td><td>To'g'ri aytmoq</td></tr>
+          <tr><td>Bite the bullet</td><td>Og'riqni yutib yubormoq</td></tr>
+          <tr><td>Let the cat out of the bag</td><td>Siri fosh bo'lmoq</td></tr>
+          <tr><td>Cost an arm and a leg</td><td>Juda qimmat bo'lmoq</td></tr>
+          <tr><td>Once in a blue moon</td><td>Juda kam, bir umr</td></tr>
+          <tr><td>Spill the beans</td><td>Sirni aytib yubormoq</td></tr>
+          <tr><td>It's raining cats and dogs</td><td>Qattiq yomg'ir yog'yapti</td></tr>
+          <tr><td>A piece of cake</td><td>Juda oson</td></tr>
+          <tr><td>Under the weather</td><td>Kasal, yomon his qilish</td></tr>
+          <tr><td>Miss the boat</td><td>Imkoniyatni qo'ldan chiqarmoq</td></tr>
+          <tr><td>Bite off more than you can chew</td><td>Kuchidan ortiq ish olmoq</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="lesson" onclick="tl(this)">
+    <div class="lh"><div class="lnum">04</div><h4>Discourse Markers — Bog'lovchi so'zlar</h4><span class="ltag">Yozma uslub</span><span class="larr">▶</span></div>
+    <div class="lb">
+      <div class="gb"><div class="glabel">Academic writing uchun</div>
+        <code>Qo'shimcha:   Furthermore, Moreover, In addition, Besides
+Qarama-qarshi: However, Nevertheless, On the other hand,
+               Despite this, Nonetheless, Although
+Sabab:        Therefore, Thus, Hence, As a result, Consequently
+Misol:        For instance, For example, To illustrate
+Xulosa:       In conclusion, To sum up, Overall, All in all
+Tartib:       Firstly, Subsequently, Finally, Meanwhile</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ VOCAB ══════════════ -->
+<div id="vocab" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">📖</div><h2>1000+ So'z Lug'ati</h2></div><p>Mavzular bo'yicha tematik lug'at</p></div>
+  <div class="divider"></div>
+
+  <div class="vcat">🏠 Uy va Oila</div>
+  <table class="vtable" style="margin-bottom:1.5rem">
+    <thead><tr><th>Inglizcha</th><th>Talaffuz</th><th>O'zbekcha</th></tr></thead>
+    <tbody>
+      <tr><td>family</td><td>/ˈfæm.ɪ.li/</td><td>oila</td></tr>
+      <tr><td>grandmother</td><td>/ˈɡrænd.mʌð.ər/</td><td>buvi</td></tr>
+      <tr><td>grandfather</td><td>/ˈɡrænd.fɑː.ðər/</td><td>bobo</td></tr>
+      <tr><td>husband</td><td>/ˈhʌz.bənd/</td><td>er (turmush o'rtoq)</td></tr>
+      <tr><td>wife</td><td>/waɪf/</td><td>xotin (turmush o'rtoq)</td></tr>
+      <tr><td>neighbour</td><td>/ˈneɪ.bər/</td><td>qo'shni</td></tr>
+      <tr><td>living room</td><td>/ˈlɪv.ɪŋ ruːm/</td><td>mehmonxona</td></tr>
+      <tr><td>bathroom</td><td>/ˈbɑːθ.ruːm/</td><td>hammom</td></tr>
+      <tr><td>ceiling</td><td>/ˈsiː.lɪŋ/</td><td>ship</td></tr>
+      <tr><td>stairs</td><td>/steərz/</td><td>zina</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vcat">🍎 Oziq-Ovqat</div>
+  <table class="vtable" style="margin-bottom:1.5rem">
+    <thead><tr><th>Inglizcha</th><th>Talaffuz</th><th>O'zbekcha</th></tr></thead>
+    <tbody>
+      <tr><td>breakfast</td><td>/ˈbrek.fəst/</td><td>nonushta</td></tr>
+      <tr><td>cucumber</td><td>/ˈkjuː.kʌm.bər/</td><td>bodring</td></tr>
+      <tr><td>garlic</td><td>/ˈɡɑː.lɪk/</td><td>sarimsoq</td></tr>
+      <tr><td>lamb</td><td>/læm/</td><td>qo'zi go'shti</td></tr>
+      <tr><td>flour</td><td>/flaʊər/</td><td>un</td></tr>
+      <tr><td>sugar</td><td>/ˈʃʊɡ.ər/</td><td>shakar</td></tr>
+      <tr><td>oil</td><td>/ɔɪl/</td><td>yog'</td></tr>
+      <tr><td>spicy</td><td>/ˈspaɪ.si/</td><td>achchiq</td></tr>
+      <tr><td>delicious</td><td>/dɪˈlɪʃ.əs/</td><td>mazali</td></tr>
+      <tr><td>fry</td><td>/fraɪ/</td><td>qovurmoq</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vcat">💼 Ish va Kasb</div>
+  <table class="vtable" style="margin-bottom:1.5rem">
+    <thead><tr><th>Inglizcha</th><th>Talaffuz</th><th>O'zbekcha</th></tr></thead>
+    <tbody>
+      <tr><td>accountant</td><td>/əˈkaʊn.tənt/</td><td>buxgalter</td></tr>
+      <tr><td>architect</td><td>/ˈɑː.kɪ.tekt/</td><td>me'mor</td></tr>
+      <tr><td>journalist</td><td>/ˈdʒɜː.nəl.ɪst/</td><td>jurnalist</td></tr>
+      <tr><td>programmer</td><td>/ˈprəʊ.ɡræm.ər/</td><td>dasturchi</td></tr>
+      <tr><td>salary</td><td>/ˈsæl.ər.i/</td><td>oylik maosh</td></tr>
+      <tr><td>colleague</td><td>/ˈkɒl.iːɡ/</td><td>hamkasb</td></tr>
+      <tr><td>interview</td><td>/ˈɪn.tə.vjuː/</td><td>suhbat/intervyu</td></tr>
+      <tr><td>deadline</td><td>/ˈded.laɪn/</td><td>muddat</td></tr>
+      <tr><td>promotion</td><td>/prəˈməʊ.ʃən/</td><td>martabani oshirish</td></tr>
+      <tr><td>resign</td><td>/rɪˈzaɪn/</td><td>ish tashlamoq</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vcat">✈️ Sayohat</div>
+  <table class="vtable" style="margin-bottom:1.5rem">
+    <thead><tr><th>Inglizcha</th><th>Talaffuz</th><th>O'zbekcha</th></tr></thead>
+    <tbody>
+      <tr><td>passport</td><td>/ˈpɑːs.pɔːt/</td><td>pasport</td></tr>
+      <tr><td>luggage</td><td>/ˈlʌɡ.ɪdʒ/</td><td>bagaj</td></tr>
+      <tr><td>boarding pass</td><td>/ˈbɔː.dɪŋ pɑːs/</td><td>posadka kartasi</td></tr>
+      <tr><td>customs</td><td>/ˈkʌs.təmz/</td><td>bojxona</td></tr>
+      <tr><td>hotel</td><td>/həʊˈtel/</td><td>mehmonxona</td></tr>
+      <tr><td>reservation</td><td>/ˌrez.əˈveɪ.ʃən/</td><td>bron qilish</td></tr>
+      <tr><td>exchange rate</td><td>/ɪksˈtʃeɪndʒ reɪt/</td><td>valyuta kursi</td></tr>
+      <tr><td>sightseeing</td><td>/ˈsaɪt.siː.ɪŋ/</td><td>sayohat/ko'rgazma</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vcat">😊 His-Tuyg'ular & Sifatlar</div>
+  <table class="vtable" style="margin-bottom:1.5rem">
+    <thead><tr><th>Inglizcha</th><th>Talaffuz</th><th>O'zbekcha</th></tr></thead>
+    <tbody>
+      <tr><td>anxious</td><td>/ˈæŋk.ʃəs/</td><td>tashvishli</td></tr>
+      <tr><td>confident</td><td>/ˈkɒn.fɪ.dənt/</td><td>ishonchli, dadil</td></tr>
+      <tr><td>jealous</td><td>/ˈdʒel.əs/</td><td>rashkchi, havaskor</td></tr>
+      <tr><td>grateful</td><td>/ˈɡreɪt.fəl/</td><td>minnatdor</td></tr>
+      <tr><td>exhausted</td><td>/ɪɡˈzɔːs.tɪd/</td><td>holdan toygan</td></tr>
+      <tr><td>proud</td><td>/praʊd/</td><td>g'ururli</td></tr>
+      <tr><td>overwhelmed</td><td>/ˌəʊ.vəˈwelmd/</td><td>bosib ketgan (his)</td></tr>
+      <tr><td>optimistic</td><td>/ˌɒp.tɪˈmɪs.tɪk/</td><td>optimist</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vcat">🌿 Tabiat & Muhit</div>
+  <table class="vtable">
+    <thead><tr><th>Inglizcha</th><th>Talaffuz</th><th>O'zbekcha</th></tr></thead>
+    <tbody>
+      <tr><td>earthquake</td><td>/ˈɜːθ.kweɪk/</td><td>zilzila</td></tr>
+      <tr><td>drought</td><td>/draʊt/</td><td>qurg'oqchilik</td></tr>
+      <tr><td>waterfall</td><td>/ˈwɔː.tə.fɔːl/</td><td>sharshar</td></tr>
+      <tr><td>glacier</td><td>/ˈɡlæs.i.ər/</td><td>muzlik</td></tr>
+      <tr><td>renewable</td><td>/rɪˈnjuː.ə.bəl/</td><td>qayta tiklanadigan</td></tr>
+      <tr><td>pollution</td><td>/pəˈluː.ʃən/</td><td>ifloslanish</td></tr>
+      <tr><td>wildlife</td><td>/ˈwaɪld.laɪf/</td><td>yovvoyi tabiat</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════ FLASHCARD ══════════════ -->
+<div id="flashcard" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">🃏</div><h2>Flashcard — Yodlash</h2></div><p>Kartochkani bosib orqa tomonini ko'ring</p></div>
+  <div class="divider"></div>
+
+  <div style="margin-bottom:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+    <button class="fc-btn" onclick="loadDeck('basic')">🌱 Asosiy</button>
+    <button class="fc-btn" onclick="loadDeck('verbs')">⚡ Fe'llar</button>
+    <button class="fc-btn" onclick="loadDeck('adj')">🌈 Sifatlar</button>
+    <button class="fc-btn" onclick="loadDeck('phrases')">💬 Iboralar</button>
+  </div>
+
+  <div class="fc-wrap">
+    <div class="fc" id="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">
+        <div class="fc-word" id="fc-word">beautiful</div>
+        <div class="fc-pron" id="fc-pron">/ˈbjuː.tɪ.fəl/</div>
+        <div class="fc-hint">👆 bosing</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-meaning" id="fc-meaning">Chiroyli, go'zal</div>
+        <div class="fc-example" id="fc-example">"What a beautiful sunset!"</div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="fcMove(-1)">← Oldingi</button>
+    <span class="fc-counter" id="fc-counter">1 / 12</span>
+    <button class="fc-btn" onclick="fcMove(1)">Keyingi →</button>
+  </div>
+  <div id="fc-progress" style="margin-top:.8rem">
+    <div class="prog-track"><div class="prog-fill" id="fc-bar" style="width:8%"></div></div>
+  </div>
+</div>
+
+<!-- ══════════════ TASKS ══════════════ -->
+<div id="tasks" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">✏️</div><h2>Amaliy Vazifalar</h2></div><p>200+ topshiriq — yozma, og'zaki, grammatika, tarjima</p></div>
+  <div class="divider"></div>
+
+  <!-- Fill in the blanks -->
+  <div class="tcard">
+    <div class="thead2"><span class="tbadge tbG">Grammatika</span><h4 style="flex:1">Bo'shliqlarni to'ldiring — Present Simple</h4><span class="tpts">10 ball</span></div>
+    <p>Fe'lning to'g'ri shaklini yozing:</p>
+    <div style="line-height:2.5;font-size:.9rem">
+      <div>1. She <input class="blank" id="b1" size="8"> (work) at a hospital every day.</div>
+      <div>2. They <input class="blank" id="b2" size="10"> (not/eat) fast food.</div>
+      <div>3. <input class="blank" id="b3" size="4"> he <input class="blank" id="b4" size="8"> (speak) French?</div>
+      <div>4. Water <input class="blank" id="b5" size="8"> (freeze) at 0°C.</div>
+      <div>5. My father <input class="blank" id="b6" size="8"> (read) the news every morning.</div>
+    </div>
+    <button class="ans-btn" onclick="checkBlanks()">✓ Tekshirish</button>
+    <div class="rmsg ok" id="blank-result"></div>
+  </div>
+
+  <!-- Translation task -->
+  <div class="tcard">
+    <div class="thead2"><span class="tbadge tbW">Tarjima</span><h4 style="flex:1">O'zbekchadan inglizchaga</h4><span class="tpts">15 ball</span></div>
+    <ol class="tlist">
+      <li>Men kecha universitetga bormadim.</li>
+      <li>Siz hech qachon Samarqandda bo'lganmisiz?</li>
+      <li>U agar ko'proq mashq qilsa, sog'lom bo'ladi.</li>
+      <li>Yangi ko'prik qurilmoqda.</li>
+      <li>Agar men millioner bo'lganimda, dunyoni sayohat qilardim.</li>
+      <li>U meni toshkentlik ekanligimni aytdi.</li>
+      <li>Grammatikani o'rganish qiyin, lekin mumkin.</li>
+    </ol>
+    <textarea class="afield" rows="8" placeholder="Tarjimalarni bu yerga yozing...&#10;1. I didn't go to university yesterday.&#10;2. ..."></textarea>
+    <button class="ans-btn" onclick="showAns(this,'1. I didn\'t go to university yesterday.\n2. Have you ever been to Samarkand?\n3. If she exercises more, she will be healthy.\n4. A new bridge is being built.\n5. If I were a millionaire, I would travel the world.\n6. He/She said (that) I was from Tashkent.\n7. Learning grammar is difficult, but possible.')">📋 Javobni ko'rish</button>
+    <div class="rmsg ok"></div>
+  </div>
+
+  <!-- Writing task -->
+  <div class="tcard">
+    <div class="thead2"><span class="tbadge tbW">Yozma</span><h4 style="flex:1">Maktub yozing (150–200 so'z)</h4><span class="tpts">25 ball</span></div>
+    <p>Xorijiy do'stingizga Navro'z bayrami haqida xat yozing. Quyidagilarni kiriting:</p>
+    <ul style="font-size:.85rem;color:var(--muted);margin:.5rem 0 .8rem 1.2rem">
+      <li>Navro'z nima va qachon nishonlanadi</li>
+      <li>Nima yeyiladi va nima qilinadi</li>
+      <li>Siz uchun bu bayramning ahamiyati</li>
+      <li>Do'stingizni taklif qiling</li>
+    </ul>
+    <textarea class="afield" rows="10" placeholder="Dear [Name],&#10;I want to tell you about Navro'z, a wonderful holiday we celebrate in Uzbekistan..."></textarea>
+  </div>
+
+  <!-- Speaking prompts -->
+  <div class="tcard">
+    <div class="thead2"><span class="tbadge tbS">Og'zaki</span><h4 style="flex:1">Og'zaki topshiriqlar</h4><span class="tpts">30 ball</span></div>
+    <p>Quyidagi mavzularda 1–3 daqiqa gapiring (yozib oling!):</p>
+    <ol class="tlist">
+      <li><b>IELTS Part 1:</b> Describe your hometown. What do you like/dislike about it?</li>
+      <li><b>IELTS Part 2:</b> Describe a person who has influenced your life. Who are they? How?</li>
+      <li><b>IELTS Part 2:</b> Describe a book or film you enjoyed recently.</li>
+      <li><b>Discussion:</b> "Social media has more benefits than disadvantages." Do you agree?</li>
+      <li><b>Debate:</b> Should English be the only language taught in schools worldwide?</li>
+    </ol>
+    <div class="tip">Yozib oling → tinglang → noto'g'ri joylarga e'tibor bering → qayta yozib oling</div>
+  </div>
+
+  <!-- Error correction -->
+  <div class="tcard">
+    <div class="thead2"><span class="tbadge tbP">Xato Tuzatish</span><h4 style="flex:1">Xatoni toping va to'g'rilang</h4><span class="tpts">10 ball</span></div>
+    <p>Har bir gapda 1 ta xato bor. Toping va to'g'ri variantini yozing:</p>
+    <ol class="tlist">
+      <li>She have been living here since five years.</li>
+      <li>I didn't went to the market yesterday.</li>
+      <li>If I will have time, I'll help you.</li>
+      <li>He said me that he was tired.</li>
+      <li>The news are very interesting today.</li>
+      <li>I am agree with your opinion.</li>
+      <li>She is more taller than her brother.</li>
+    </ol>
+    <textarea class="afield" rows="8" placeholder="1. She has been living here for five years.&#10;2. ..."></textarea>
+    <button class="ans-btn" onclick="showAns(this,'1. has been living / for five years\n2. didn\'t go (not went)\n3. If I have time (no will after if)\n4. He told me / said to me\n5. The news IS (uncountable)\n6. I AGREE (no am)\n7. She is TALLER (no more)')">📋 Javoblar</button>
+    <div class="rmsg ok"></div>
+  </div>
+
+  <!-- Word formation -->
+  <div class="tcard">
+    <div class="thead2"><span class="tbadge tbV">So'z Yasalishi</span><h4 style="flex:1">So'z formasini o'zgartiring</h4><span class="tpts">10 ball</span></div>
+    <p>Qavs ichidagi so'zni to'g'ri shaklda qo'llang:</p>
+    <ol class="tlist">
+      <li>She is a very (talent) ___ musician.</li>
+      <li>The (decide) ___ was made quickly.</li>
+      <li>He spoke with great (confident) ___.</li>
+      <li>It was completely (possible) ___ to finish on time.</li>
+      <li>Her (kind) ___ touched everyone's heart.</li>
+      <li>The (employ) ___ rate has increased.</li>
+    </ol>
+    <button class="ans-btn" onclick="showAns(this,'1. talented\n2. decision\n3. confidence\n4. impossible\n5. kindness\n6. unemployment / employment')">📋 Javoblar</button>
+    <div class="rmsg ok"></div>
+  </div>
+</div>
+
+<!-- ══════════════ QUIZ ══════════════ -->
+<div id="quiz" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">🧠</div><h2>Interaktiv Testlar</h2></div><p>O'z bilimingizni sinab ko'ring</p></div>
+  <div class="divider"></div>
+
+  <div id="quiz-area">
+    <div id="quiz-q0" class="qcard">
+      <div class="qnum">Savol 1 / 10 — Grammatika (A2)</div>
+      <div class="qtext">I _____ to the cinema last Saturday.</div>
+      <button class="qopt" onclick="qAns(this,0,0,'wrong')">go</button>
+      <button class="qopt" onclick="qAns(this,0,1,'correct')">went</button>
+      <button class="qopt" onclick="qAns(this,0,2,'wrong')">have gone</button>
+      <button class="qopt" onclick="qAns(this,0,3,'wrong')">goes</button>
+      <div class="qfeedback ok">✅ To'g'ri! "last Saturday" — aniq o'tmish vaqt → Past Simple ishlatiladi.</div>
+      <div class="qfeedback no">❌ "last Saturday" — aniq o'tmish vaqt → Past Simple: "went" kerak.</div>
+    </div>
+
+    <div id="quiz-q1" class="qcard">
+      <div class="qnum">Savol 2 / 10 — Grammatika (B1)</div>
+      <div class="qtext">She _____ in this city for 10 years. (She still lives here)</div>
+      <button class="qopt" onclick="qAns(this,1,0,'wrong')">lived</button>
+      <button class="qopt" onclick="qAns(this,1,1,'correct')">has lived</button>
+      <button class="qopt" onclick="qAns(this,1,2,'wrong')">is living</button>
+      <button class="qopt" onclick="qAns(this,1,3,'wrong')">lives</button>
+      <div class="qfeedback ok">✅ To'g'ri! Hali davom etayotgan holat + "for 10 years" → Present Perfect.</div>
+      <div class="qfeedback no">❌ Hali davom etayotgan holat + "for 10 years" → Present Perfect: "has lived".</div>
+    </div>
+
+    <div id="quiz-q2" class="qcard">
+      <div class="qnum">Savol 3 / 10 — Leksika</div>
+      <div class="qtext">"She _____ the job offer because the salary was too low."</div>
+      <button class="qopt" onclick="qAns(this,2,0,'wrong')">turned up</button>
+      <button class="qopt" onclick="qAns(this,2,1,'wrong')">turned on</button>
+      <button class="qopt" onclick="qAns(this,2,2,'correct')">turned down</button>
+      <button class="qopt" onclick="qAns(this,2,3,'wrong')">turned off</button>
+      <div class="qfeedback ok">✅ To'g'ri! "turn down" = rad etmoq.</div>
+      <div class="qfeedback no">❌ "turn down" = rad etmoq. "turn up" = paydo bo'lmoq, "turn on" = yoqmoq.</div>
+    </div>
+
+    <div id="quiz-q3" class="qcard">
+      <div class="qnum">Savol 4 / 10 — Grammatika (B2)</div>
+      <div class="qtext">If I _____ you, I would apologise immediately.</div>
+      <button class="qopt" onclick="qAns(this,3,0,'wrong')">am</button>
+      <button class="qopt" onclick="qAns(this,3,1,'correct')">were</button>
+      <button class="qopt" onclick="qAns(this,3,2,'wrong')">would be</button>
+      <button class="qopt" onclick="qAns(this,3,3,'wrong')">will be</button>
+      <div class="qfeedback ok">✅ To'g'ri! 2nd conditional: "If I were you" — subjunctive mood ishlatiladi.</div>
+      <div class="qfeedback no">❌ 2nd conditional da "If I were you" (were, hatto I bilan ham) to'g'ri shakl.</div>
+    </div>
+
+    <div id="quiz-q4" class="qcard">
+      <div class="qnum">Savol 5 / 10 — Grammatika (B1)</div>
+      <div class="qtext">The report _____ before the meeting starts.</div>
+      <button class="qopt" onclick="qAns(this,4,0,'wrong')">must finish</button>
+      <button class="qopt" onclick="qAns(this,4,1,'correct')">must be finished</button>
+      <button class="qopt" onclick="qAns(this,4,2,'wrong')">must have finished</button>
+      <button class="qopt" onclick="qAns(this,4,3,'wrong')">is finishing</button>
+      <div class="qfeedback ok">✅ To'g'ri! Passive + modal: "must be finished".</div>
+      <div class="qfeedback no">❌ Passive (report — bajarilish ob'ekti): "must be finished" kerak.</div>
+    </div>
+
+    <div id="quiz-q5" class="qcard">
+      <div class="qnum">Savol 6 / 10 — Leksika (C1)</div>
+      <div class="qtext">"It's raining cats and dogs" nima degani?</div>
+      <button class="qopt" onclick="qAns(this,5,0,'wrong')">Mushuk va it yomg'irda qoldi</button>
+      <button class="qopt" onclick="qAns(this,5,1,'correct')">Qattiq yomg'ir yog'yapti</button>
+      <button class="qopt" onclick="qAns(this,5,2,'wrong')">Hayvonlar qochib ketdi</button>
+      <button class="qopt" onclick="qAns(this,5,3,'wrong')">Arzimas muammo bor</button>
+      <div class="qfeedback ok">✅ To'g'ri! Bu idiom — juda kuchli yomg'irni bildiradi.</div>
+      <div class="qfeedback no">❌ "It's raining cats and dogs" = kuchli yomg'ir yog'yapti.</div>
+    </div>
+
+    <div id="quiz-q6" class="qcard">
+      <div class="qnum">Savol 7 / 10 — Grammatika (A2)</div>
+      <div class="qtext">There _____ a lot of people at the concert last night.</div>
+      <button class="qopt" onclick="qAns(this,6,0,'correct')">were</button>
+      <button class="qopt" onclick="qAns(this,6,1,'wrong')">was</button>
+      <button class="qopt" onclick="qAns(this,6,2,'wrong')">are</button>
+      <button class="qopt" onclick="qAns(this,6,3,'wrong')">is</button>
+      <div class="qfeedback ok">✅ To'g'ri! "a lot of people" — ko'plik + o'tmish → "were".</div>
+      <div class="qfeedback no">❌ "a lot of people" — ko'plik + o'tmish → "There were".</div>
+    </div>
+
+    <div id="quiz-q7" class="qcard">
+      <div class="qnum">Savol 8 / 10 — Grammatika (B2)</div>
+      <div class="qtext">He told me that he _____ the project the day before.</div>
+      <button class="qopt" onclick="qAns(this,7,0,'wrong')">finishes</button>
+      <button class="qopt" onclick="qAns(this,7,1,'wrong')">has finished</button>
+      <button class="qopt" onclick="qAns(this,7,2,'correct')">had finished</button>
+      <button class="qopt" onclick="qAns(this,7,3,'wrong')">finished</button>
+      <div class="qfeedback ok">✅ To'g'ri! Reported speech — Past Perfect: "had finished".</div>
+      <div class="qfeedback no">❌ Reported speech — backshift → "had finished" (Past Perfect).</div>
+    </div>
+
+    <div id="quiz-q8" class="qcard">
+      <div class="qnum">Savol 9 / 10 — Grammatika (A1)</div>
+      <div class="qtext">_____ you like some more tea?</div>
+      <button class="qopt" onclick="qAns(this,8,0,'wrong')">Will</button>
+      <button class="qopt" onclick="qAns(this,8,1,'correct')">Would</button>
+      <button class="qopt" onclick="qAns(this,8,2,'wrong')">Do</button>
+      <button class="qopt" onclick="qAns(this,8,3,'wrong')">Can</button>
+      <div class="qfeedback ok">✅ To'g'ri! Takliflar uchun "Would you like…?" ishlatiladi.</div>
+      <div class="qfeedback no">❌ Taklif qilishda "Would you like…?" eng to'g'ri shakl.</div>
+    </div>
+
+    <div id="quiz-q9" class="qcard">
+      <div class="qnum">Savol 10 / 10 — Leksika</div>
+      <div class="qtext">"I'm feeling a bit under the weather today" nima degani?</div>
+      <button class="qopt" onclick="qAns(this,9,0,'wrong')">Ob-havo yomon</button>
+      <button class="qopt" onclick="qAns(this,9,1,'wrong')">Tashqarida salqin</button>
+      <button class="qopt" onclick="qAns(this,9,2,'correct')">Kasal yoki yomon his qilyapman</button>
+      <button class="qopt" onclick="qAns(this,9,3,'wrong')">Uyda qolyapman</button>
+      <div class="qfeedback ok">✅ To'g'ri! "Under the weather" = kasal yoki halsiz his qilmoq.</div>
+      <div class="qfeedback no">❌ "Under the weather" = kasal, o'zini yomon his qilmoq.</div>
+    </div>
+
+    <button class="submit-btn" onclick="calcScore()">📊 Natijani ko'rish</button>
+    <div class="score-box" id="score-box" style="display:none">
+      <div class="score-num" id="score-num">0/10</div>
+      <div class="score-lbl" id="score-lbl"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PROGRESS ══════════════ -->
+<div id="progress" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">📊</div><h2>O'z Natijangiz</h2></div><p>Har daraja bo'yicha foizni belgilang</p></div>
+  <div class="divider"></div>
+
+  <div id="prog-cards"></div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1.5rem;margin-top:1.5rem">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:.8rem">📌 Keyingi qadam tavsiyalari</h3>
+    <ul style="font-size:.87rem;color:var(--muted);list-style:none;display:grid;gap:.5rem">
+      <li style="padding:.5rem .8rem;background:var(--bg);border-radius:6px">📱 <b style="color:var(--text)">Duolingo / Anki</b> — kundalik so'z yodlash uchun</li>
+      <li style="padding:.5rem .8rem;background:var(--bg);border-radius:6px">🎧 <b style="color:var(--text)">BBC Learning English</b> — podcast va audio darslar</li>
+      <li style="padding:.5rem .8rem;background:var(--bg);border-radius:6px">📺 <b style="color:var(--text)">TED Talks</b> — ingliz tilida nutq tinglash</li>
+      <li style="padding:.5rem .8rem;background:var(--bg);border-radius:6px">📚 <b style="color:var(--text)">Graded Readers</b> — darajangizga mos kitoblar</li>
+      <li style="padding:.5rem .8rem;background:var(--bg);border-radius:6px">🗣 <b style="color:var(--text)">italki / Tandem</b> — ona tili inglizcha bo'lgan sherikov toping</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════ CERT ══════════════ -->
+<div id="cert" class="sec">
+  <div class="sh"><div class="sh-top"><div class="sh-icon">🏅</div><h2>Sertifikat</h2></div><p>Kursni tugatganlar uchun</p></div>
+  <div class="divider"></div>
+  <div class="cert">
+    <div style="font-size:3rem;margin-bottom:.5rem">🎓</div>
+    <h3>Certificate of Completion</h3>
+    <p style="color:var(--muted);margin-top:.4rem;font-size:.9rem">English Mastery PRO kursini tugatganingiz bilan tabriklaymiz!</p>
+    <input class="cert-input" type="text" id="cn" placeholder="Ism va Familiyangiz">
+    <select id="clvl" style="display:block;margin:.6rem auto 0;padding:.65rem 1rem;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:7px;font-family:'Outfit',sans-serif;font-size:.9rem;width:280px">
+      <option value="A1">A1 — Boshlang'ich</option>
+      <option value="A2">A2 — Elementar</option>
+      <option value="B1">B1 — O'rta</option>
+      <option value="B2" selected>B2 — Yuqori O'rta</option>
+      <option value="C1">C1 — Ilg'or</option>
+    </select>
+    <button class="cert-btn" onclick="genCert()">🏅 Sertifikat yaratish</button>
+    <div id="cert-out">
+      <p style="font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)">This certifies that</p>
+      <div class="cname" id="co-name"></div>
+      <p style="color:var(--muted);margin:.4rem 0">has successfully completed</p>
+      <p style="font-size:1.1rem;font-weight:700;color:var(--cream)">English Mastery PRO</p>
+      <p style="color:var(--gold);font-size:1rem;margin:.3rem 0" id="co-lvl"></p>
+      <p style="font-size:.78rem;color:var(--muted);margin-top:.8rem" id="co-date"></p>
+      <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.78rem;color:var(--muted)">Issued by English Mastery PRO · Toshkent, O'zbekiston</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ── Navigation ──
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+// ── Lessons ──
+function tl(el){el.classList.toggle('open')}
+
+// ── Quiz ──
+const qScores=new Array(10).fill(null);
+function qAns(btn,q,opt,res){
+  const card=document.getElementById('quiz-q'+q);
+  card.querySelectorAll('.qopt').forEach(b=>{b.disabled=true;b.style.opacity='.5'});
+  btn.style.opacity='1';btn.classList.add(res);
+  const fbs=card.querySelectorAll('.qfeedback');
+  fbs[res==='correct'?0:1].style.display='block';
+  qScores[q]=res==='correct'?1:0;
+}
+function calcScore(){
+  const s=qScores.filter(x=>x!==null).reduce((a,b)=>a+b,0);
+  const total=qScores.filter(x=>x!==null).length;
+  const pct=Math.round(s/10*100);
+  const lb=pct>=90?'🏆 Ajoyib! Siz professional darajada!':pct>=70?'✅ Yaxshi natija! Davom eting!':pct>=50?'📘 O\'rta. Qoidalarni takrorlang.':'📖 Yana bir bor grammatikani o\'rganing.';
+  document.getElementById('score-num').textContent=s+'/'+total+ ' ('+pct+'%)';
+  document.getElementById('score-lbl').textContent=lb;
+  document.getElementById('score-box').style.display='block';
+  document.querySelector('.submit-btn').style.display='none';
+}
+
+// ── Tasks ──
+function showAns(btn,ans){
+  const msg=btn.nextElementSibling;
+  msg.innerHTML='<b>Javoblar:</b><br>'+ans.replace(/\n/g,'<br>');
+  msg.style.display='block';
+}
+function checkBlanks(){
+  const answers={b1:'works',b2:"don't eat",b3:'does',b4:'speak',b5:'freezes',b6:'reads'};
+  let ok=0,total=6;
+  for(let k in answers){
+    const v=document.getElementById(k).value.trim().toLowerCase();
+    if(v===answers[k]){ok++;document.getElementById(k).style.borderBottom='2px solid var(--green)'}
+    else{document.getElementById(k).style.borderBottom='2px solid var(--red)'}
+  }
+  const r=document.getElementById('blank-result');
+  r.innerHTML=`✅ ${ok}/${total} to'g'ri. <b>Javoblar:</b> works / don't eat / Does … speak / freezes / reads`;
+  r.style.display='block';
+}
+
+// ── Flashcards ──
+const decks={
+  basic:[
+    {w:'beautiful',p:'/ˈbjuː.tɪ.fəl/',m:'Chiroyli, go\'zal',e:'What a beautiful sunset!'},
+    {w:'important',p:'/ɪmˈpɔːt.ənt/',m:'Muhim, ahamiyatli',e:'This is very important.'},
+    {w:'difficult',p:'/ˈdɪf.ɪ.kəlt/',m:'Qiyin, murakkab',e:'English is difficult but fun.'},
+    {w:'wonderful',p:'/ˈwʌn.də.fəl/',m:'Ajoyib, mo\'jizaviy',e:'We had a wonderful time.'},
+    {w:'necessary',p:'/ˈnes.ə.ser.i/',m:'Zarur, kerakli',e:'Is it necessary to come?'},
+    {w:'experience',p:'/ɪkˈspɪər.i.əns/',m:'Tajriba; boshdan kechirmoq',e:'She has a lot of experience.'},
+    {w:'opportunity',p:'/ˌɒp.əˈtjuː.nɪ.ti/',m:'Imkoniyat, fursat',e:'This is a great opportunity.'},
+    {w:'environment',p:'/ɪnˈvaɪ.rən.mənt/',m:'Muhit, atrof-muhit',e:'We must protect the environment.'},
+    {w:'responsibility',p:'/rɪˌspɒn.sɪˈbɪl.ɪ.ti/',m:'Mas\'uliyat',e:'It\'s your responsibility.'},
+    {w:'achievement',p:'/əˈtʃiːv.mənt/',m:'Yutuq, muvaffaqiyat',e:'That\'s a great achievement!'},
+    {w:'communicate',p:'/kəˈmjuː.nɪ.keɪt/',m:'Muloqot qilmoq',e:'We need to communicate better.'},
+    {w:'significant',p:'/sɪɡˈnɪf.ɪ.kənt/',m:'Muhim, sezilarli',e:'A significant improvement.'},
+  ],
+  verbs:[
+    {w:'achieve',p:'/əˈtʃiːv/',m:'Erishmoq',e:'She achieved her goals.'},
+    {w:'overcome',p:'/ˌəʊ.vəˈkʌm/',m:'Yengmoq, engib o\'tmoq',e:'He overcame his fear.'},
+    {w:'negotiate',p:'/nɪˈɡəʊ.ʃi.eɪt/',m:'Muzokaralar olib bormoq',e:'They negotiated a deal.'},
+    {w:'persuade',p:'/pəˈsweɪd/',m:'Ishontirmoq',e:'She persuaded him to stay.'},
+    {w:'acknowledge',p:'/əkˈnɒl.ɪdʒ/',m:'Tan olmoq, e\'tirof etmoq',e:'He acknowledged the mistake.'},
+    {w:'anticipate',p:'/ænˈtɪs.ɪ.peɪt/',m:'Oldindan ko\'rmoq',e:'We didn\'t anticipate this.'},
+    {w:'collaborate',p:'/kəˈlæb.ə.reɪt/',m:'Hamkorlik qilmoq',e:'Let\'s collaborate on this.'},
+    {w:'emphasize',p:'/ˈem.fə.saɪz/',m:'Ta\'kidlamoq',e:'She emphasized the point.'},
+    {w:'implement',p:'/ˈɪm.plɪ.ment/',m:'Amalga oshirmoq',e:'We implemented the plan.'},
+    {w:'demonstrate',p:'/ˈdem.ən.streɪt/',m:'Ko\'rsatmoq, isbotlamoq',e:'Demonstrate your skills.'},
+  ],
+  adj:[
+    {w:'ambitious',p:'/æmˈbɪʃ.əs/',m:'Maqsadli, intiluvchi',e:'She\'s very ambitious.'},
+    {w:'reliable',p:'/rɪˈlaɪ.ə.bəl/',m:'Ishonchli',e:'He\'s a reliable person.'},
+    {w:'enthusiastic',p:'/ɪnˌθjuː.ziˈæs.tɪk/',m:'Ishtiyoqli, g\'ayratli',e:'The students were enthusiastic.'},
+    {w:'sophisticated',p:'/səˈfɪs.tɪ.keɪ.tɪd/',m:'Murakkab; ziyoli',e:'A sophisticated design.'},
+    {w:'inevitable',p:'/ɪnˈev.ɪ.tə.bəl/',m:'Muqarrar',e:'Change is inevitable.'},
+    {w:'controversial',p:'/ˌkɒn.trəˈvɜː.ʃəl/',m:'Bahsli, munozarali',e:'A controversial topic.'},
+    {w:'fundamental',p:'/ˌfʌn.dəˈmen.tl/',m:'Asosiy, fundamental',e:'A fundamental change.'},
+    {w:'substantial',p:'/səbˈstæn.ʃəl/',m:'Sezilarli, muhim',e:'A substantial improvement.'},
+  ],
+  phrases:[
+    {w:'As a matter of fact',p:'',m:'Aslida, haqiqatan ham',e:'As a matter of fact, I agree.'},
+    {w:'On the other hand',p:'',m:'Boshqa tomondan',e:'On the other hand, it\'s risky.'},
+    {w:'In spite of',p:'',m:'…ga qaramay',e:'In spite of the rain, we went.'},
+    {w:'With regard to',p:'',m:'…ga nisbatan, borasida',e:'With regard to your question…'},
+    {w:'Take into account',p:'',m:'Hisobga olmoq',e:'Take this into account.'},
+    {w:'Come to terms with',p:'',m:'Qabul qilmoq (vaziyatni)',e:'She came to terms with it.'},
+    {w:'Make up one\'s mind',p:'',m:'Qaror qilmoq',e:'Have you made up your mind?'},
+    {w:'Keep in touch',p:'',m:'Aloqada bo\'lmoq',e:'Let\'s keep in touch!'},
+  ]
+};
+let curDeck='basic',curIdx=0;
+function loadDeck(name){
+  curDeck=name;curIdx=0;
+  document.getElementById('fc').classList.remove('flipped');
+  renderFC();
+}
+function renderFC(){
+  const d=decks[curDeck];const c=d[curIdx];
+  document.getElementById('fc').classList.remove('flipped');
+  setTimeout(()=>{
+    document.getElementById('fc-word').textContent=c.w;
+    document.getElementById('fc-pron').textContent=c.p;
+    document.getElementById('fc-meaning').textContent=c.m;
+    document.getElementById('fc-example').textContent='"'+c.e+'"';
+    document.getElementById('fc-counter').textContent=(curIdx+1)+' / '+d.length;
+    document.getElementById('fc-bar').style.width=((curIdx+1)/d.length*100)+'%';
+  },150);
+}
+function fcMove(d){
+  const deck=decks[curDeck];
+  curIdx=(curIdx+d+deck.length)%deck.length;
+  renderFC();
+}
+renderFC();
+
+// ── Progress ──
+const progLevels=[
+  {name:'A1 — Boshlang\'ich',id:'p0',max:100},
+  {name:'A2 — Elementar',id:'p1',max:100},
+  {name:'B1 — O\'rta',id:'p2',max:100},
+  {name:'B2 — Yuqori O\'rta',id:'p3',max:100},
+  {name:'C1 — Ilg\'or',id:'p4',max:100},
+  {name:'Lug\'at (so\'zlar soni)',id:'p5',max:1000},
+];
+function buildProgress(){
+  const c=document.getElementById('prog-cards');
+  c.innerHTML=progLevels.map(l=>`
+    <div class="prog-card">
+      <div class="prog-label"><span>${l.name}</span><span id="${l.id}-pct">0${l.max===1000?' so\'z':'%'}</span></div>
+      <input type="range" min="0" max="${l.max}" value="0" oninput="updateProg('${l.id}',this.value,${l.max})" style="width:100%;margin:.4rem 0;accent-color:var(--gold)">
+      <div class="prog-track"><div class="prog-fill" id="${l.id}-bar" style="width:0%"></div></div>
+    </div>`).join('');
+}
+function updateProg(id,val,max){
+  document.getElementById(id+'-pct').textContent=max===1000?val+" so'z":val+'%';
+  document.getElementById(id+'-bar').style.width=(val/max*100)+'%';
+}
+buildProgress();
+
+// ── Certificate ──
+function genCert(){
+  const name=document.getElementById('cn').value.trim();
+  const lvl=document.getElementById('clvl').value;
+  if(!name){alert('Iltimos, ismingizni kiriting!');return;}
+  document.getElementById('co-name').textContent=name;
+  document.getElementById('co-lvl').textContent='Daraja: '+lvl;
+  document.getElementById('co-date').textContent='Sana: '+new Date().toLocaleDateString('uz-UZ',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('cert-out').style.display='block';
+}
+</script>
+</body>
+</html>
+
