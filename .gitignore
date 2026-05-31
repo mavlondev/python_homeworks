@@ -1,2 +1,4 @@
 # Ignore a build directory and its contents
 no-homework-build/
+
+*.html
